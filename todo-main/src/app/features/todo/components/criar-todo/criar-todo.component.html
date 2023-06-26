@@ -1,0 +1,30 @@
+<mat-card>
+  <h1 class="text-center text-muted mb-4">Cadastrar Tarefa</h1>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <mat-form-field class="col-12 mb-2" appearance="outline">
+        <mat-label>Tarefa</mat-label>
+        <input matInput type="text" formControlName="tarefa" />
+        <mat-error>Campo obrigatório</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="col-12 mb-2" appearance="outline">
+        <mat-label>Descrição</mat-label>
+        <input matInput type="text" formControlName="descricao" />
+        <mat-error>Campo obrigatório</mat-error>
+      </mat-form-field>
+
+      <div class="col-12 d-flex justify-content-between align-items-center">
+        <mat-checkbox color="primary" formControlName="concluido">
+          Concluído
+        </mat-checkbox>
+
+        <button mat-raised-button color="primary">SALVAR</button>
+      </div>
+    </div>
+  </form>
+</mat-card>
+
+
+<app-loader *ngIf="carregando"></app-loader>

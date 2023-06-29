@@ -1,5 +1,8 @@
+<button mat-raised-button  color="primary" type="button" (click)="abrirModal('Criar')">Criar Tarefa</button>
+
 <mat-card class="p-4">
   <h1 class="text-center text-muted mb-4">Lista de Tarefas</h1>
+
 
   <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="tarefa">
@@ -19,29 +22,29 @@
 
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef>Status</th>
-      <td mat-cell *matCellDef="let element">{{ element.status ? 'Completa': 'Incompleta' }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.status ? 'Completa' : 'Incompleta' }}</td>
     </ng-container>
 
     <ng-container matColumnDef="acoes">
       <th mat-header-cell *matHeaderCellDef>Ações</th>
       <td mat-cell *matCellDef="let element">
-        <button mat-icon-button [matMenuTriggerFor]="menu" (click)="setCurrentId(element.id)">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
           <mat-icon>more_vert</mat-icon>
         </button>
       </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="openMenu(row)"></tr>
   </table>
 </mat-card>
 
-<button mat-icon-button [id]="currentId" [matMenuTriggerFor]="menu">
+<button mat-icon-button [matMenuTriggerFor]="menu">
   <mat-icon>menu</mat-icon>
 </button>
 <mat-menu #menu="matMenu">
   
-  <button mat-menu-item (click)="editarTodo()">
+  <button mat-menu-item (click)="abrirModal('Editar')">
     <mat-icon class="text-secondary">edit</mat-icon>
     <span>Editar</span>
   </button>

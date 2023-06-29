@@ -1,8 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
-import { Todo } from 'src/app/core/services/todo/todo.service';
+import { EditarTodoPayload, Todo } from 'src/app/core/services/todo/todo.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalCriarEditarTodoComponent } from '../modal-criar-editar-todo';
   
   
   
@@ -14,12 +15,14 @@ import { Todo } from 'src/app/core/services/todo/todo.service';
   
   export class ListarTodosComponent implements OnInit {
    private httpClient = inject(HttpClient)
+
+   private matDialog = inject(MatDialog);
     
     ngOnInit(): void {
       this.getTodos()
     }
-  
-    displayedColumns: string[] = [
+
+    displayedColumns = [
       'tarefa',
       'descricao',
       'dataCriacao',
@@ -32,11 +35,7 @@ import { Todo } from 'src/app/core/services/todo/todo.service';
 
     carregando = false;
 
-    currentId!: number;
-
-    setCurrentId(id: number){
-      this.currentId = id
-    }
+    todoSelecionado!: Todo;
 
     getTodos(): void {
 
@@ -48,18 +47,52 @@ import { Todo } from 'src/app/core/services/todo/todo.service';
   }).add(() => {
     this.carregando = false
   })  
+}
 
+  abrirModal(acao: 'Criar' | 'Editar'): void {
+    let data: Todo | undefined
 
+    if(acao === 'Editar') {
+      data = this.todoSelecionado
+    } else {
+      data = undefined
     }
 
-    editarTodo(): void {
-    
+
+    this.matDialog.open(ModalCriarEditarTodoComponent, {
+      autoFocus: false,
+      width: '500px',
+      data
+    })
+  }
+
+ private obterPayloadEditarTodo(): EditarTodoPayload {
+  return {
+  descricao: this.todoSelecionado.descricao,
+  tarefa: this.todoSelecionado.tarefa,
+  status: this.todoSelecionado.status
+  }
+}
+
+     openMenu(todo: Todo ){
+      this.todoSelecionado = todo
     }
-    
+
+
+    editarTodo() {
+    const body = this.obterPayloadEditarTodo()
+
+    this.httpClient.patch(`http://localhost:8000/todo/${this.todoSelecionado.id}`, body).subscribe(()=> {
+       this.getTodos()
+    }).add(() => {
+      this.carregando = false
+    });
+  }
+
     deletarTodo(): void{
       this.carregando = true
 
-      this.httpClient.delete(`http://localhost:8000/todo/${this.currentId}`).subscribe(() => {
+      this.httpClient.delete(`http://localhost:8000/todo/${this.todoSelecionado.id}`).subscribe(() => {
         this.getTodos()
       }).add(() => {
         this.carregando = false
@@ -82,21 +115,3 @@ import { Todo } from 'src/app/core/services/todo/todo.service';
 //     })
 //     .then(res => console.log(res)) 
 //   }
-
- 
-
-
-// }
-
-// export interface PeriodicElement {
-//   task: string;
-//   description: string;
-//   created_at: string;
-//   status: boolean;
-// }
-
-// export class PeriodicElement {
-//   options: Record<string, string> = {
-//     'accept': 'application/json',
-//     'Content-Type': 'application/json',
-//     'X-CSRFToken':'a52cVk8RqHF9LNsR6mjzfumXCxDJSTO3O5o1yTsdcEwx1wDuRlXuoR5Rj7aFAYf3' 

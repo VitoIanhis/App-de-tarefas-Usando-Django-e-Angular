@@ -1,17 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CriarTodoComponent } from './components/criar-todo';
 import { ListarTodosComponent } from './components/listar-todos';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'criar',
-  },
-  {
-    path: 'criar',
-    component: CriarTodoComponent,
+    redirectTo: 'lista',
   },
   {
     path: 'lista',

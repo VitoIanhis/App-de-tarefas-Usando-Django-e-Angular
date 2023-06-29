@@ -1,5 +1,9 @@
 <h1 align="center">Gerenciador de Tarefas 📝</h1>
 
+<h1>
+    <img src="https://ik.imagekit.io/tntifmcqk/Desktop_Screenshot_2023.06.29_-_14.50.46.37.png?updatedAt=1688061236264"/>
+</h1>
+
 ## 🔨 Tools
 
 - Angular 

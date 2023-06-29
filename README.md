@@ -34,7 +34,7 @@ $ npm install
 #De run no frontend
 $ ng serve -o
 ```
-# Após seguir estes passos essa deve ser a tela que irá aparecer para você:
+# Após seguir estes passos essa tela deve aparecer para você:
 <h1>
     <img src="https://ik.imagekit.io/tntifmcqk/Desktop_Screenshot_2023.06.29_-_02.06.59.36.png?updatedAt=1688015371106"/>
 </h1>

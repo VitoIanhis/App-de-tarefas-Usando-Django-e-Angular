@@ -18,7 +18,7 @@
 $ cd projeto_tarefas
 ```
 ```bash 
-#De run no backend
+#Dê run no backend
 $ python manage.py runserver
 ```
 ### 🌎 Frontend
@@ -31,7 +31,7 @@ $ cd todo-main
 $ npm install
 ```
 ```bash 
-#De run no frontend
+#Dê run no frontend
 $ ng serve -o
 ```
 # Após seguir estes passos essa tela deve aparecer para você:

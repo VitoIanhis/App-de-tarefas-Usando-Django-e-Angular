@@ -2,23 +2,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
-export interface Todo extends EditarTodoPayload {
+export interface Todo extends CriarOuEditarTodoPayload {
   id: number;
 }
 
-export interface EditarTodoPayload  {
-  tarefa: string;
-  descricao: string
+export interface CriarOuEditarTodoPayload  {
+  task: string;
+  description: string
   status: boolean
 }
-
-export interface CriarTodoPayload {
-  tarefa: string;
-  descricao: string;
-  status: boolean
-}
-
-
 
 @Injectable({
   providedIn: 'root'
@@ -47,22 +39,6 @@ export class TodoService {
 
   //   return this.httpclient.get<Todo>(url, options)
   // }
-
-  criarTodo(body: CriarTodoPayload) {
-    // const options = {
-    //   headers: this.getOptions,
-    //   method: 'POST',
-    //   body 
-    // }
-
-      fetch('http://127.0.0.1:8000/todo/', {
-    method: 'POST', 
-    headers: {
-      'Content-type': 'application/json'
-    },
-    body: JSON.stringify(body)
-  }).then(response => console.log(response)) 
-}
 
 
   //   editarTodo(): void {

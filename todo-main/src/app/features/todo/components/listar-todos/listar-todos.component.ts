@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
-import { EditarTodoPayload, Todo } from 'src/app/core/services/todo/todo.service';
+import { CriarOuEditarTodoPayload, Todo } from 'src/app/core/services/todo/todo.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalCriarEditarTodoComponent } from '../modal-criar-editar-todo';
   
@@ -19,7 +19,7 @@ import { ModalCriarEditarTodoComponent } from '../modal-criar-editar-todo';
    private matDialog = inject(MatDialog);
     
     ngOnInit(): void {
-      this.getTodos()
+      this.carregarTodos()
     }
 
     displayedColumns = [
@@ -37,7 +37,7 @@ import { ModalCriarEditarTodoComponent } from '../modal-criar-editar-todo';
 
     todoSelecionado!: Todo;
 
-    getTodos(): void {
+    carregarTodos(): void {
 
     this.carregando = true;  
 
@@ -58,42 +58,31 @@ import { ModalCriarEditarTodoComponent } from '../modal-criar-editar-todo';
       data = undefined
     }
 
-
     this.matDialog.open(ModalCriarEditarTodoComponent, {
       autoFocus: false,
-      width: '500px',
+      width: '600px',
       data
+    }).afterClosed().subscribe((params) => {
+      if(params?.recarregar) {
+        this.carregarTodos()
+      }
     })
   }
 
- private obterPayloadEditarTodo(): EditarTodoPayload {
-  return {
-  descricao: this.todoSelecionado.descricao,
-  tarefa: this.todoSelecionado.tarefa,
-  status: this.todoSelecionado.status
-  }
-}
+
 
      openMenu(todo: Todo ){
       this.todoSelecionado = todo
     }
 
 
-    editarTodo() {
-    const body = this.obterPayloadEditarTodo()
 
-    this.httpClient.patch(`http://localhost:8000/todo/${this.todoSelecionado.id}`, body).subscribe(()=> {
-       this.getTodos()
-    }).add(() => {
-      this.carregando = false
-    });
-  }
 
     deletarTodo(): void{
       this.carregando = true
 
       this.httpClient.delete(`http://localhost:8000/todo/${this.todoSelecionado.id}`).subscribe(() => {
-        this.getTodos()
+        this.carregarTodos()
       }).add(() => {
         this.carregando = false
       })
@@ -101,17 +90,3 @@ import { ModalCriarEditarTodoComponent } from '../modal-criar-editar-todo';
     }
   }
   
-//   editarTodo(): void {
-//     console.log('EDITAR TODO');
-//     console.log(this.currentId)
-//     fetch(`http://127.0.0.1:8000/todo/${this.currentId}/`, {
-//       method: 'PATCH',
-//       headers: this.options,
-//       body: JSON.stringify({
-//         task: "",
-//         description: "",
-//         status: true
-//       })
-//     })
-//     .then(res => console.log(res)) 
-//   }

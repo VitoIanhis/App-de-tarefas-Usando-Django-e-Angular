@@ -13,6 +13,9 @@
 ## 📌 Como utilizar
 
 ### 💻 Backend
+
+#### Abra o cmd para executar os comandos a seguir:
+
 ```bash 
 #Entre no diretório do projeto
 $ cd projeto_tarefas

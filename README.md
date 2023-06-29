@@ -31,7 +31,7 @@ $ cd todo-main
 $ npm install
 ```
 ```bash 
-#Dê run no frontend
+#Dê run no frontend (Esse comando já vai abrir o projeto no seu navegador).
 $ ng serve -o
 ```
 # Após seguir estes passos essa tela deve aparecer para você:

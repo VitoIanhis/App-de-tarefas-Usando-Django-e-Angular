@@ -1,92 +1,82 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
-import { CriarOuEditarTodoPayload, Todo } from 'src/app/core/services/todo/todo.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalCriarEditarTodoComponent } from '../modal-criar-editar-todo';
-  
-  
-  
-  @Component({
-    selector: 'app-listar-todos',
-    templateUrl: './listar-todos.component.html',
-    styleUrls: ['./listar-todos.component.css'],
-  })
-  
-  export class ListarTodosComponent implements OnInit {
-   private httpClient = inject(HttpClient)
+import { Todo } from 'src/app/core/models/Todo';
 
-   private matDialog = inject(MatDialog);
-    
-    ngOnInit(): void {
-      this.carregarTodos()
-    }
+@Component({
+  selector: 'app-listar-todos',
+  templateUrl: './listar-todos.component.html',
+  styleUrls: ['./listar-todos.component.css'],
+})
+export class ListarTodosComponent implements OnInit {
+  private httpClient = inject(HttpClient);
 
-    displayedColumns = [
-      'tarefa',
-      'descricao',
-      'dataCriacao',
-      'status',
-      'acoes',
-    ];
+  private matDialog = inject(MatDialog);
 
+  ngOnInit(): void {
+    this.carregarTodos();
+  }
 
-    dataSource = new MatTableDataSource<Todo>()
+  displayedColumns = ['tarefa', 'descricao', 'dataCriacao', 'status', 'acoes'];
 
-    carregando = false;
+  dataSource = new MatTableDataSource<Todo>();
 
-    todoSelecionado!: Todo;
+  carregando = false;
 
-    carregarTodos(): void {
+  todoSelecionado!: Todo;
 
-    this.carregando = true;  
+  carregarTodos(): void {
+    this.carregando = true;
 
-    this.httpClient.get<Todo[]>('http://localhost:8000/todo/').subscribe((response) => {
+    this.httpClient
+      .get<Todo[]>('http://localhost:8000/todo/')
+      .subscribe((response) => {
         this.dataSource.data = response;
-          
-  }).add(() => {
-    this.carregando = false
-  })  
-}
+      })
+      .add(() => {
+        this.carregando = false;
+      });
+  }
 
   abrirModal(acao: 'Criar' | 'Editar'): void {
-    let data: Todo | undefined
+    let data: Todo | undefined;
 
-    if(acao === 'Editar') {
-      data = this.todoSelecionado
+    if (acao === 'Editar') {
+      data = this.todoSelecionado;
     } else {
-      data = undefined
+      data = undefined;
     }
 
-    this.matDialog.open(ModalCriarEditarTodoComponent, {
-      autoFocus: false,
-      width: '600px',
-      data
-    }).afterClosed().subscribe((params) => {
-      if(params?.recarregar) {
-        this.carregarTodos()
-      }
-    })
-  }
-
-
-
-     openMenu(todo: Todo ){
-      this.todoSelecionado = todo
-    }
-
-
-
-
-    deletarTodo(): void{
-      this.carregando = true
-
-      this.httpClient.delete(`http://localhost:8000/todo/${this.todoSelecionado.id}`).subscribe(() => {
-        this.carregarTodos()
-      }).add(() => {
-        this.carregando = false
+    this.matDialog
+      .open(ModalCriarEditarTodoComponent, {
+        autoFocus: false,
+        width: '600px',
+        data,
       })
-      
-    }
+      .afterClosed()
+      .subscribe((params) => {
+        if (params?.recarregar) {
+          this.carregarTodos();
+        }
+      });
   }
-  
+
+  openMenu(todo: Todo) {
+    this.todoSelecionado = todo;
+  }
+
+  deletarTodo(): void {
+    this.carregando = true;
+
+    this.httpClient
+      .delete(`http://localhost:8000/todo/${this.todoSelecionado.id}`)
+      .subscribe(() => {
+        this.carregarTodos();
+      })
+      .add(() => {
+        this.carregando = false;
+      });
+  }
+}

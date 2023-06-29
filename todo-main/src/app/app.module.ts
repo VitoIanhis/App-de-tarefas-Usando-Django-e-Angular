@@ -9,7 +9,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TodoModule } from './features/todo/todo.module';
 import { CoreModule } from './core/core.module';
 
-
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -18,7 +17,7 @@ import { CoreModule } from './core/core.module';
     BrowserAnimationsModule,
     TodoModule,
     CoreModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

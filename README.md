@@ -1,5 +1,12 @@
 <h1 align="center">Gerenciador de Tarefas 📝</h1>
 
+# ⚙️ Funcionalidades
+- Criação de tarefas: os usuários podem adicionar novas tarefas, fornecendo um título, descrição e o status.
+- Visualização de tarefas: as tarefas são exibidas em uma lista, mostrando o título, descrição, data de criação e status.
+- Atualização de tarefas: os usuários podem editar as informações de uma tarefa existente, como título, descrição e status.
+- Exclusão de tarefas: os usuários podem remover tarefas da lista quando forem concluídas ou não forem mais necessárias.
+- Concluir uma tarefa: os usuários podem marcar uma tarefa como concluída para acompanhar seu progresso.
+
 ## 🔨 Tools
 
 - Angular 

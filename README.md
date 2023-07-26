@@ -24,13 +24,30 @@
 #### Abra o cmd para executar os comandos a seguir:
 
 ```bash 
+#Instale o django
+$ pip install django
+```
+
+```bash 
+#Instale o django-cors-headers
+$ pip install django-cors-headers
+```
+
+```bash 
+#Instale o django-rest-framework
+$ pip install djangorestframework
+```
+
+```bash 
 #Entre no diretório do projeto
 $ cd projeto_tarefas
 ```
+
 ```bash 
 #Dê run no backend
 $ python manage.py runserver
 ```
+
 ### 🌎 Frontend
 ```bash 
 #Entre no diretório do frontend
